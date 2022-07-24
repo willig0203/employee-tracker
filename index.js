@@ -41,16 +41,17 @@ const promptUser = teamData => {
         viewTbl(qry);
       }
       if (answers.choice === 'View all employees') {
-        qry = 'SELECT * FROM employee';
+        qry = "select * from department join roles on department.id=roles.department_id join employee on roles.id=employee.role_id";
         viewTbl(qry);
       }
 
       if (answers.choice === 'Add a department') {
         qry = `INSERT INTO Department (name) VALUES (?);`;
-        addRow(qry,answers);
+        addDept(qry,answers);
       }
       if (answers.choice === 'Add a role') {
-        qry = 'SELECT * FROM role';
+        qry = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?);`;
+        addRole(qry,answers);
       }
       if (answers.choice === 'Add an employee') {
         qry = 'SELECT * FROM employee';
@@ -63,7 +64,93 @@ const promptUser = teamData => {
     });
 };
 
-const addRow = (qry) => {
+const addRole = (qry) => {
+  console.log(`
+  ========
+  Add Role
+  ========
+  `);
+
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'newRoleTitle',
+        message: 'What is the title of your new Role? (Required)',
+        validate: nameInput => {
+          if (nameInput) {
+            return true;
+          } else {
+            console.log('You need to enter a Role title!');
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'newRoleSalary',
+        message: 'What is the Salary of your new Role? (Required)',
+        validate: nameInput => {
+          if (nameInput) {
+            return true;
+          } else {
+            console.log('You need to enter a Salary for the Role name!');
+            return false;
+          }
+        }
+      },
+      {
+        type: 'input',
+        name: 'newRoleDepartment',
+        message: 'What is the Department number of your new Role? (Required)',
+        validate: nameInput => {
+          if (nameInput) {
+            return true;
+          } else {
+            console.log('You need to enter a department number for the Role name!');
+            return false;
+          }
+        }
+      }
+
+    ])
+    .then(answers => {
+      console.info('Answer:', answers);
+
+      let connection;
+
+      connection = mysql.createConnection({
+        user: process.env.DB_USER,
+        database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        password: process.env.DB_PASSWORD
+      });
+    
+      connection.connect((error) => {
+        if (error) {
+          console.log('Error connecting to the MySQL Database');
+          return;
+        }
+        console.log();
+        // console.log(choice);
+        console.log('Connection established sucessfully');
+      });
+    
+      connection.query(qry, [answers.newRoleTitle, answers.newRoleSalary, answers.newRoleDepartment], function (err, rows, fields) {
+        if (err) throw err;
+        console.table(rows);
+      });
+    
+      // free connection
+      connection.end();
+    
+          // recursive
+          promptUser();
+
+    });
+};
+
+const addDept = (qry) => {
   console.log(`
   ==============
   Add Department
