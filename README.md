@@ -4,7 +4,7 @@
 
 ### Built using Node.js with Iquirer for the command line and MySql2 for database.
 
-Walkthrough Video Link: 
+Walkthrough Video Link: https://drive.google.com/file/d/1nq1RBLR3CDh10prLDG4s0yC_FzJVYzbw/view
 
 Repo: https://github.com/willig0203/employee-tracker
 
