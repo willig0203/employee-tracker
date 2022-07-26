@@ -1,14 +1,14 @@
 # employee-tracker
 
-### This is a Node.js application that takes input from a manager about an engineering team and creates a HTML page showing employee's information.
+### This is a Node.js application that takes input from a business owner to view and manage the employee database.
 
-## Built using Node.js with Iquirer for the command line and Jest for unit testing.
+## Built using Node.js with Iquirer for the command line and MySql2 for database.
 
-Walkthrough Vidio Link: https://drive.google.com/file/d/1G2eiR1jsy3D1QqNRj0UamLaq0WzuyU9l/view
+Walkthrough Video Link: 
 
-Repo: https://github.com/willig0203/team-profile-generator
+Repo: https://github.com/willig0203/employee-tracker
 
-[Screenshot of application](./images/Screenshot%202022-07-11.jpg)
+[Screenshot of application](/images/Screenshot2022-07-25.jpg)
 
 Contribution: 
 Gary Williams (Trademark GarywareLLC).
